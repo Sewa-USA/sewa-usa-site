@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
-import { getEvents } from '../../lib/content';
+import { getEvents, type EventItem } from '../../lib/content';
 
-export function getStaticPaths() {
-  return getEvents().map((event) => ({ params: { slug: event.slug }, props: { event } }));
+export async function getStaticPaths() {
+  return (await getEvents()).map((event) => ({ params: { slug: event.slug }, props: { event } }));
 }
 
 const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -10,7 +10,7 @@ const esc = (t: string) => t.replace(/\\/g, '\\\\').replace(/[,;]/g, (c) => `\\$
 
 // Calendar file for one event. No end time is stored, so events last 2 hours.
 export const GET: APIRoute = ({ props }) => {
-  const { event } = props as { event: ReturnType<typeof getEvents>[number] };
+  const { event } = props as { event: EventItem };
   const start = new Date(event.date);
   const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
   const lines = [

@@ -951,3 +951,18 @@ a.card:hover::before {
   color: var(--navy);
   text-decoration: none;
 }
+
+/* Photos from the editor */
+.cover {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow);
+}
+.avatar--photo {
+  object-fit: cover;
+  background: var(--soft);
+}

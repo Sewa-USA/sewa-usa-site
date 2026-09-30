@@ -1,9 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getEvents, formatDateTime } from '../../lib/content';
+import { getEvents, formatDateTime, img } from '../../lib/content';
 
-export function getStaticPaths() {
-  return getEvents().map((event) => ({ params: { slug: event.slug }, props: { event } }));
+export async function getStaticPaths() {
+  return (await getEvents()).map((event) => ({ params: { slug: event.slug }, props: { event } }));
 }
 
 const { event } = Astro.props;
@@ -23,6 +23,7 @@ const { event } = Astro.props;
   </div>
   <section class="section">
     <div class="wrap prose reveal">
+      {event.imageUrl && <img class="cover" src={img(event.imageUrl, 1100, 620)} alt="" width="1100" height="620" loading="lazy" />}
       <p><strong>{event.summary}</strong></p>
       {event.body.map((p) => <p>{p}</p>)}
       {new Date(event.date) >= new Date() && (

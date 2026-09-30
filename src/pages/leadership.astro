@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getTeam } from '../lib/content';
+import { getTeam, img } from '../lib/content';
 
-const team = getTeam();
+const team = await getTeam();
 const initials = (name: string) =>
   name
     .split(/\s+/)
@@ -25,7 +25,11 @@ const initials = (name: string) =>
       <div class="grid grid--4">
         {team.map((m) => (
           <div class="card reveal">
-            <div class="avatar" aria-hidden="true">{initials(m.name)}</div>
+            {m.imageUrl ? (
+              <img class="avatar avatar--photo" src={img(m.imageUrl, 168, 168)} alt="" width="84" height="84" loading="lazy" />
+            ) : (
+              <div class="avatar" aria-hidden="true">{initials(m.name)}</div>
+            )}
             {m.sample && <span class="badge badge--sample">Exemple</span>}
             <h3>{m.name}</h3>
             <p class="meta">{m.role}</p>

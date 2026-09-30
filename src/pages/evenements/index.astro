@@ -6,7 +6,7 @@ import { getEvents } from '../../lib/content';
 // All events are rendered; the script below splits them into "upcoming" and
 // "past" using the visitor's clock, so events move to the archive on their own
 // without waiting for a site rebuild.
-const all = getEvents();
+const all = await getEvents();
 const now = new Date();
 const upcoming = all.filter((e) => new Date(e.date) >= now);
 const past = all.filter((e) => new Date(e.date) < now).reverse();

@@ -1,9 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getPosts, formatDate } from '../../lib/content';
+import { getPosts, formatDate, img } from '../../lib/content';
 
-export function getStaticPaths() {
-  return getPosts().map((post) => ({ params: { slug: post.slug }, props: { post } }));
+export async function getStaticPaths() {
+  return (await getPosts()).map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post } = Astro.props;
@@ -24,6 +24,7 @@ const official = post.category === 'Communiqué officiel';
   </div>
   <section class="section">
     <div class="wrap prose reveal">
+      {post.imageUrl && <img class="cover" src={img(post.imageUrl, 1100, 620)} alt="" width="1100" height="620" loading="lazy" />}
       {post.body.map((p) => <p>{p}</p>)}
     </div>
   </section>

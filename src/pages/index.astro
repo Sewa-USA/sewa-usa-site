@@ -5,12 +5,12 @@ import PostCard from '../components/PostCard.astro';
 import { getSite, getUpcomingEvents, getPosts, getPastEvents, dateParts, formatDateTime } from '../lib/content';
 
 const site = getSite();
-const upcoming = getUpcomingEvents();
+const upcoming = await getUpcomingEvents();
 const next = upcoming[0];
 const nextParts = next ? dateParts(next.date) : null;
 const shown = upcoming.slice(0, 2);
-const lastPast = upcoming.length ? null : getPastEvents()[0];
-const posts = getPosts().slice(0, 3);
+const lastPast = upcoming.length ? null : (await getPastEvents())[0];
+const posts = (await getPosts()).slice(0, 3);
 
 // Highlight the word "Centrafrique" in the headline when it is present.
 const [before, after] = site.tagline.split('Centrafrique');
