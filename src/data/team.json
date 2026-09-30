@@ -1,6 +1,0 @@
-[
-  { "name": "Nom Prénom", "role": "Président(e)", "bio": "Présentation courte à renseigner.", "sample": true },
-  { "name": "Nom Prénom", "role": "Vice-président(e)", "bio": "Présentation courte à renseigner.", "sample": true },
-  { "name": "Nom Prénom", "role": "Secrétaire général(e)", "bio": "Présentation courte à renseigner.", "sample": true },
-  { "name": "Nom Prénom", "role": "Trésorier(ère)", "bio": "Présentation courte à renseigner.", "sample": true }
-]

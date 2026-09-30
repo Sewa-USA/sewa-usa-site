@@ -5,10 +5,10 @@ Français uniquement pour l'instant. Installable sur l'écran d'accueil (PWA).
 
 ## Pour les éditeurs (sans code)
 
-Aujourd'hui (version de démonstration), le contenu est dans `src/data/*.json`.
-Prochaine étape prévue : un espace d'édition (Sanity) avec des formulaires
-« Nouvel événement », « Nouvel article », etc., sans jamais toucher au code.
-Les éléments marqués **Exemple** sur le site sont des contenus fictifs à remplacer.
+Le contenu se gère dans **l'espace d'édition : https://sewa-usa.sanity.studio**
+(connexion par invitation). Quatre listes : Événement, Article, Membre de l'équipe, Ressource.
+Remplir le formulaire, puis **Publish**. Le site se met à jour en environ une minute.
+Les éléments cochés « Contenu d'exemple » affichent l'étiquette **Exemple** : à remplacer ou supprimer.
 
 ## Pour le développeur qui reprend
 
@@ -24,14 +24,15 @@ npm run build    # génère dist/
 |---|---|
 | Couleurs, polices, espacements | `src/styles/global.css` (variables en haut) |
 | Coordonnées, slogan, nom | `src/data/site.json` |
-| Événements / articles / équipe / ressources | `src/data/*.json` |
+| Événements / articles / équipe / ressources | Sanity (`studio/schemaTypes/*` pour les champs) |
 | Logo et icônes de l'app | `public/logo.png`, `public/icons/` |
 | Carte du pied de page | `public/africa-map.svg`, générée par `scripts/build-map.mjs` (voir l'en-tête du script) |
 | Menu | `src/components/Header.astro` et `src/layouts/Base.astro` (barre mobile) |
 | Source unique du contenu | `src/lib/content.ts` |
 
-Brancher Sanity plus tard : seul `src/lib/content.ts` change. Les pages gardent
-les mêmes fonctions et les mêmes types.
+Le site lit Sanity à la publication via `src/lib/content.ts` (projet `oy6psniq`, jeu de données `production`).
+L'espace d'édition (`studio/`) se déploie avec `cd studio && npm install && npx sanity deploy`.
+Le contenu de départ est dans `studio/seed/seed.ndjson`.
 
 ### Événements passés / à venir
 La page Événements sépare les deux listes avec l'horloge du visiteur : un événement
@@ -53,4 +54,6 @@ hors connexion. Si la structure du site change, incrémenter `VERSION` dans `sw.
 - [ ] Valider les textes de la page d'accueil avec le président.
 - [ ] Ajouter l'adresse de la page Facebook dans `site.json` (`facebookHref`).
 - [ ] Choisir et brancher le nom de domaine.
-- [ ] Brancher l'espace d'édition (Sanity) et le formulaire de contact.
+- [ ] Inviter le président comme Administrateur dans Sanity (sanity.io/manage), puis transférer la propriété.
+- [ ] Brancher le formulaire de contact.
+- [ ] Relier Sanity à Vercel (webhook de publication) pour la mise à jour automatique.
