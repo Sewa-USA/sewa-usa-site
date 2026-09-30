@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventCard from '../../components/EventCard.astro';
+import { getEvents } from '../../lib/content';
+
+// All events are rendered; the script below splits them into "upcoming" and
+// "past" using the visitor's clock, so events move to the archive on their own
+// without waiting for a site rebuild.
+const all = getEvents();
+const now = new Date();
+const upcoming = all.filter((e) => new Date(e.date) >= now);
+const past = all.filter((e) => new Date(e.date) < now).reverse();
+---
+
+<Base title="Événements" description="Événements à venir et archives de SEWA USA.">
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Événements</span>
+      <h1>Se retrouver, ensemble</h1>
+      <p class="lead">Les prochains rendez-vous de la communauté, et le souvenir de ceux qui ont eu lieu.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>À venir</h2>
+      <div class="grid grid--2" id="upcoming">
+        {upcoming.map((e) => <EventCard event={e} />)}
+      </div>
+      <div class="empty" id="upcoming-empty" hidden={upcoming.length > 0}>
+        Aucun événement à venir pour le moment.
+      </div>
+
+      <h2 style="margin-top:3.5rem">Événements passés</h2>
+      <div class="grid grid--2" id="past">
+        {past.map((e) => <EventCard event={e} past />)}
+      </div>
+      <div class="empty" id="past-empty" hidden={past.length > 0}>Aucun événement passé.</div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var up = document.getElementById('upcoming');
+      var past = document.getElementById('past');
+      var now = Date.now();
+      var cards = Array.prototype.slice.call(document.querySelectorAll('[data-date]'));
+      cards.sort(function (a, b) {
+        return new Date(a.dataset.date) - new Date(b.dataset.date);
+      });
+      cards.forEach(function (c) {
+        var isPast = new Date(c.dataset.date).getTime() < now;
+        c.classList.toggle('event--past', isPast);
+        // Sorted oldest to newest: upcoming keeps that order (soonest first);
+        // past is prepended so the most recent comes first.
+        if (isPast) past.prepend(c);
+        else up.append(c);
+      });
+      document.getElementById('upcoming-empty').hidden = up.children.length > 0;
+      document.getElementById('past-empty').hidden = past.children.length > 0;
+    })();
+  </script>
+</Base>

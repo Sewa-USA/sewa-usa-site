@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import EventCard from '../components/EventCard.astro';
+import PostCard from '../components/PostCard.astro';
+import { getSite, getUpcomingEvents, getPosts, getPastEvents } from '../lib/content';
+
+const site = getSite();
+const upcoming = getUpcomingEvents().slice(0, 2);
+const recent = upcoming.length ? [] : getPastEvents().slice(0, 1);
+const posts = getPosts().slice(0, 3);
+---
+
+<Base>
+  <section class="hero">
+    <div class="hero__ring" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="eyebrow">Association des Centrafricains et Amis de la Centrafrique aux États-Unis</span>
+      <h1>{site.tagline}</h1>
+      <p class="lead">
+        SEWA USA réunit la communauté centrafricaine et ses amis : des rencontres, des nouvelles du pays et des
+        ressources utiles pour avancer ensemble.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--light" href={site.whatsappHref} rel="noopener">Rejoindre la communauté</a>
+        <a class="btn btn--ghost" href="/evenements">Voir les événements</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">À venir</span>
+          <h2>Prochains événements</h2>
+        </div>
+        <a href="/evenements">Tous les événements →</a>
+      </div>
+      {upcoming.length ? (
+        <div class="grid grid--2">{upcoming.map((e) => <EventCard event={e} />)}</div>
+      ) : (
+        <div class="empty">
+          <p>Aucun événement annoncé pour le moment. Revenez bientôt, ou suivez-nous sur WhatsApp.</p>
+          {recent.map((e) => <EventCard event={e} past />)}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Actualités</span>
+          <h2>Dernières nouvelles</h2>
+        </div>
+        <a href="/actualites">Toutes les actualités →</a>
+      </div>
+      <div class="grid grid--3">{posts.map((p) => <PostCard post={p} />)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid grid--2">
+        <div>
+          <span class="eyebrow">Ressources</span>
+          <h2>Des informations utiles, au même endroit</h2>
+          <p class="lead">
+            Immigration, logement, emploi, santé, études : des liens fiables pour vous aider dans vos démarches aux
+            États-Unis.
+          </p>
+          <div class="btn-row"><a class="btn btn--outline" href="/ressources">Consulter les ressources</a></div>
+        </div>
+        <div>
+          <span class="eyebrow">Leadership</span>
+          <h2>Une équipe à votre service</h2>
+          <p class="lead">Faites connaissance avec les personnes qui animent l'association.</p>
+          <div class="btn-row"><a class="btn btn--outline" href="/leadership">Rencontrer l'équipe</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta-band">
+        <h2>Restons connectés</h2>
+        <p>Rejoignez-nous sur WhatsApp pour suivre les annonces et échanger avec la communauté.</p>
+        <div class="btn-row">
+          <a class="btn btn--light" href={site.whatsappHref} rel="noopener">Écrire sur WhatsApp</a>
+          <a class="btn btn--ghost" href="/contact">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

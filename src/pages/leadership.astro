@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { getTeam } from '../lib/content';
+
+const team = getTeam();
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+---
+
+<Base title="Leadership" description="L'équipe qui anime SEWA USA.">
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Leadership</span>
+      <h1>L'équipe de SEWA USA</h1>
+      <p class="lead">Des bénévoles engagés au service de la communauté centrafricaine aux États-Unis.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="wrap">
+      <div class="grid grid--4">
+        {team.map((m) => (
+          <div class="card">
+            <div class="avatar" aria-hidden="true">{initials(m.name)}</div>
+            {m.sample && <span class="badge badge--sample">Exemple</span>}
+            <h3>{m.name}</h3>
+            <p class="meta">{m.role}</p>
+            <p>{m.bio}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

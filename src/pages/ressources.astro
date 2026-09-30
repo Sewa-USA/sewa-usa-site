@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import { getResourcesByCategory } from '../lib/content';
+
+const groups = Object.entries(getResourcesByCategory());
+---
+
+<Base title="Ressources" description="Liens et guides utiles pour la communauté : immigration, logement, emploi, santé, études.">
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Ressources</span>
+      <h1>Des informations utiles</h1>
+      <p class="lead">
+        Une sélection de sites officiels et de guides pour vous aider dans vos démarches aux États-Unis. Ces liens
+        renvoient vers des sites extérieurs à l'association.
+      </p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="wrap">
+      {groups.map(([category, items]) => (
+        <div class="res-group">
+          <h2>{category}</h2>
+          <div class="grid grid--2">
+            {items.map((r) => (
+              <a class="card res-link" href={r.url} target="_blank" rel="noopener noreferrer">
+                <div>
+                  <h3>{r.title}</h3>
+                  <p>{r.description}</p>
+                </div>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

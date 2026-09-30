@@ -1,0 +1,34 @@
+---
+import { getSite } from '../lib/content';
+
+interface Props {
+  path: string;
+}
+
+const site = getSite();
+const { path } = Astro.props;
+
+const links = [
+  { href: '/', label: 'Accueil' },
+  { href: '/evenements', label: 'Événements' },
+  { href: '/actualites', label: 'Actualités' },
+  { href: '/leadership', label: 'Leadership' },
+  { href: '/ressources', label: 'Ressources' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label={`${site.name}, accueil`}>
+      <img src="/logo.png" alt="" width="44" height="44" />
+      <span>{site.name}</span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      {links.map((l) => <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>)}
+    </nav>
+    <a class="btn btn--primary header-cta" href={site.whatsappHref} rel="noopener">Rejoindre sur WhatsApp</a>
+  </div>
+</header>

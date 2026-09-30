@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getEvents, formatDateTime } from '../../lib/content';
+
+export function getStaticPaths() {
+  return getEvents().map((event) => ({ params: { slug: event.slug }, props: { event } }));
+}
+
+const { event } = Astro.props;
+---
+
+<Base title={event.title} description={event.summary}>
+  <div class="page-head">
+    <div class="wrap">
+      <a href="/evenements">← Tous les événements</a>
+      <p class="meta" style="margin-top:1rem">
+        {event.sample && <span class="badge badge--sample">Exemple</span>}
+        {formatDateTime(event.date)}
+      </p>
+      <h1>{event.title}</h1>
+      <p class="lead">{event.location}</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="wrap prose">
+      <p><strong>{event.summary}</strong></p>
+      {event.body.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+</Base>

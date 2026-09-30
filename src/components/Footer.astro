@@ -1,0 +1,36 @@
+---
+import { getSite } from '../lib/content';
+
+const site = getSite();
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="grid grid--3">
+      <div>
+        <h3>{site.name}</h3>
+        <p>{site.fullName}</p>
+      </div>
+      <div>
+        <h3>Explorer</h3>
+        <ul>
+          <li><a href="/evenements">Événements</a></li>
+          <li><a href="/actualites">Actualités</a></li>
+          <li><a href="/leadership">Leadership</a></li>
+          <li><a href="/ressources">Ressources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Nous joindre</h3>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={`tel:${site.phoneHref}`}>{site.phone}</a></li>
+          <li><a href={site.whatsappHref} rel="noopener">WhatsApp</a></li>
+          {site.facebookHref && <li><a href={site.facebookHref} rel="noopener">Facebook</a></li>}
+        </ul>
+      </div>
+    </div>
+    <p class="footer-bottom">© {year} {site.name}. Tous droits réservés.</p>
+  </div>
+</footer>

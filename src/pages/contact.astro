@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSite } from '../lib/content';
+
+const site = getSite();
+---
+
+<Base title="Contact" description="Contactez SEWA USA par WhatsApp, e-mail ou téléphone.">
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Contact</span>
+      <h1>Parlons-nous</h1>
+      <p class="lead">Une question, une idée, l'envie de rejoindre l'association ? Écrivez-nous.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="wrap">
+      <div class="grid grid--2">
+        <div class="grid">
+          <a class="card" href={site.whatsappHref} rel="noopener">
+            <h3>WhatsApp</h3>
+            <p>{site.phone}. Le moyen le plus rapide de nous joindre.</p>
+          </a>
+          <a class="card" href={`mailto:${site.email}`}>
+            <h3>E-mail</h3>
+            <p>{site.email}</p>
+          </a>
+          <a class="card" href={`tel:${site.phoneHref}`}>
+            <h3>Téléphone</h3>
+            <p>{site.phone}</p>
+          </a>
+        </div>
+
+        {site.formEndpoint ? (
+          <form method="post" action={site.formEndpoint}>
+            <label>Nom<input name="name" autocomplete="name" required maxlength="100" /></label>
+            <label>E-mail<input type="email" name="email" autocomplete="email" required maxlength="150" /></label>
+            <label>Message<textarea name="message" required maxlength="2000"></textarea></label>
+            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button class="btn btn--primary" type="submit">Envoyer le message</button>
+          </form>
+        ) : (
+          <div class="card">
+            <h3>Formulaire de contact</h3>
+            <p>
+              Le formulaire sera activé prochainement. En attendant, écrivez-nous par WhatsApp ou par e-mail.
+            </p>
+            <div class="btn-row">
+              <a class="btn btn--primary" href={`mailto:${site.email}`}>Envoyer un e-mail</a>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</Base>

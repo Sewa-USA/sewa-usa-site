@@ -1,0 +1,20 @@
+---
+import { formatDate, type PostItem } from '../lib/content';
+
+interface Props {
+  post: PostItem;
+}
+
+const { post } = Astro.props;
+const official = post.category === 'Communiqué officiel';
+---
+
+<a class="card" href={`/actualites/${post.slug}`}>
+  <p class="meta">
+    {post.sample && <span class="badge badge--sample">Exemple</span>}
+    <span class={`badge${official ? ' badge--official' : ''}`}>{post.category}</span>
+    {formatDate(post.date)}
+  </p>
+  <h3>{post.title}</h3>
+  <p>{post.summary}</p>
+</a>

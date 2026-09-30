@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate } from '../../lib/content';
+
+export function getStaticPaths() {
+  return getPosts().map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const official = post.category === 'Communiqué officiel';
+---
+
+<Base title={post.title} description={post.summary}>
+  <div class="page-head">
+    <div class="wrap">
+      <a href="/actualites">← Toutes les actualités</a>
+      <p class="meta" style="margin-top:1rem">
+        {post.sample && <span class="badge badge--sample">Exemple</span>}
+        <span class={`badge${official ? ' badge--official' : ''}`}>{post.category}</span>
+        {formatDate(post.date)}
+      </p>
+      <h1>{post.title}</h1>
+    </div>
+  </div>
+  <section class="section">
+    <div class="wrap prose">
+      {post.body.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+</Base>

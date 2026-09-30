@@ -1,0 +1,28 @@
+---
+import { dateParts, formatDateTime, type EventItem } from '../lib/content';
+
+interface Props {
+  event: EventItem;
+  past?: boolean;
+}
+
+const { event, past = false } = Astro.props;
+const d = dateParts(event.date);
+---
+
+<a class={`card event${past ? ' event--past' : ''}`} href={`/evenements/${event.slug}`} data-date={event.date}>
+  <div class="date-chip" aria-hidden="true">
+    <strong>{d.day}</strong>
+    <span>{d.month}</span>
+    <small>{d.year}</small>
+  </div>
+  <div>
+    <p class="meta">
+      {event.sample && <span class="badge badge--sample">Exemple</span>}
+      {formatDateTime(event.date)}
+    </p>
+    <h3>{event.title}</h3>
+    <p class="meta">{event.location}</p>
+    <p>{event.summary}</p>
+  </div>
+</a>
