@@ -26,6 +26,7 @@ npm run build    # génère dist/
 | Coordonnées, slogan, nom | `src/data/site.json` |
 | Événements / articles / équipe / ressources | `src/data/*.json` |
 | Logo et icônes de l'app | `public/logo.png`, `public/icons/` |
+| Carte du pied de page | `public/africa-map.svg`, générée par `scripts/build-map.mjs` (voir l'en-tête du script) |
 | Menu | `src/components/Header.astro` et `src/layouts/Base.astro` (barre mobile) |
 | Source unique du contenu | `src/lib/content.ts` |
 

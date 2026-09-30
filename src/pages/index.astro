@@ -2,89 +2,153 @@
 import Base from '../layouts/Base.astro';
 import EventCard from '../components/EventCard.astro';
 import PostCard from '../components/PostCard.astro';
-import { getSite, getUpcomingEvents, getPosts, getPastEvents } from '../lib/content';
+import { getSite, getUpcomingEvents, getPosts, getPastEvents, dateParts, formatDateTime } from '../lib/content';
 
 const site = getSite();
-const upcoming = getUpcomingEvents().slice(0, 2);
-const recent = upcoming.length ? [] : getPastEvents().slice(0, 1);
+const upcoming = getUpcomingEvents();
+const next = upcoming[0];
+const nextParts = next ? dateParts(next.date) : null;
+const shown = upcoming.slice(0, 2);
+const lastPast = upcoming.length ? null : getPastEvents()[0];
 const posts = getPosts().slice(0, 3);
+
+// Highlight the word "Centrafrique" in the headline when it is present.
+const [before, after] = site.tagline.split('Centrafrique');
+const highlight = site.tagline.includes('Centrafrique');
 ---
 
 <Base>
   <section class="hero">
-    <div class="hero__ring" aria-hidden="true"></div>
-    <div class="wrap">
-      <span class="eyebrow">Association des Centrafricains et Amis de la Centrafrique aux États-Unis</span>
-      <h1>{site.tagline}</h1>
-      <p class="lead">
-        SEWA USA réunit la communauté centrafricaine et ses amis : des rencontres, des nouvelles du pays et des
-        ressources utiles pour avancer ensemble.
-      </p>
-      <div class="btn-row">
-        <a class="btn btn--light" href={site.whatsappHref} rel="noopener">Rejoindre la communauté</a>
-        <a class="btn btn--ghost" href="/evenements">Voir les événements</a>
+    <svg class="hero__arcs" viewBox="0 0 600 600" aria-hidden="true">
+      <defs>
+        <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8ff0b2" />
+          <stop offset="0.55" stop-color="#6aa2ff" />
+          <stop offset="1" stop-color="#b48cff" />
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#arc)" stroke-linecap="round">
+        <circle cx="300" cy="300" r="250" stroke-width="2" stroke-dasharray="520 1100" transform="rotate(-20 300 300)" />
+        <circle cx="300" cy="300" r="205" stroke-width="1.5" stroke-dasharray="380 1000" transform="rotate(95 300 300)" opacity="0.7" />
+        <circle cx="300" cy="300" r="160" stroke-width="1.2" stroke-dasharray="260 900" transform="rotate(200 300 300)" opacity="0.5" />
+        <circle cx="300" cy="300" r="115" stroke-width="1" opacity="0.25" />
+      </g>
+    </svg>
+
+    <div class="wrap hero__grid">
+      <div>
+        <span class="eyebrow">Association des Centrafricains et Amis de la Centrafrique aux États-Unis</span>
+        <h1>
+          {highlight ? (
+            <>{before}<span class="grad">Centrafrique</span>{after}</>
+          ) : (
+            site.tagline
+          )}
+        </h1>
+        <p class="lead">
+          SEWA USA réunit la communauté centrafricaine et ses amis : des rencontres, des nouvelles du pays et des
+          ressources utiles pour avancer ensemble.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--light" href={site.whatsappHref} rel="noopener">Rejoindre la communauté</a>
+          <a class="btn btn--ghost" href="/evenements">Voir les événements</a>
+        </div>
       </div>
+
+      <aside class="glass" aria-label={next ? 'Prochain événement' : 'Rejoindre la communauté'}>
+        {next && nextParts ? (
+          <>
+            <p class="label">Prochain rendez-vous</p>
+            <a class="event" href={`/evenements/${next.slug}`} style="text-decoration:none">
+              <div class="date-chip" aria-hidden="true">
+                <strong>{nextParts.day}</strong>
+                <span>{nextParts.month}</span>
+                <small>{nextParts.year}</small>
+              </div>
+              <div>
+                <h3>{next.title}</h3>
+                <p>{formatDateTime(next.date)}</p>
+                <p>{next.location}</p>
+              </div>
+            </a>
+            <div class="btn-row">
+              <a class="btn btn--light" href={`/evenements/${next.slug}`}>Voir les détails</a>
+            </div>
+          </>
+        ) : (
+          <>
+            <p class="label">Restez informés</p>
+            <h3>Suivez les annonces sur WhatsApp</h3>
+            <p>Les prochains événements seront annoncés ici et dans notre communauté.</p>
+            <div class="btn-row"><a class="btn btn--light" href={site.whatsappHref} rel="noopener">Écrire sur WhatsApp</a></div>
+          </>
+        )}
+      </aside>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head">
+      <div class="pillars">
+        <a class="pillar reveal" href="/evenements">
+          <span class="pillar__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span>
+          <h3>Se retrouver</h3>
+          <p>Rencontres, assemblées et moments de partage de la communauté.</p>
+          <span class="pillar__go">Voir les événements →</span>
+        </a>
+        <a class="pillar reveal" data-delay="1" href="/actualites">
+          <span class="pillar__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h13a2 2 0 0 1 2 2v12H6a2 2 0 0 1-2-2z"/><path d="M8 9h7M8 13h7"/></svg></span>
+          <h3>S'informer</h3>
+          <p>Actualités et communiqués officiels de l'association.</p>
+          <span class="pillar__go">Lire les actualités →</span>
+        </a>
+        <a class="pillar reveal" data-delay="2" href="/ressources">
+          <span class="pillar__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></span>
+          <h3>S'entraider</h3>
+          <p>Des liens fiables pour le logement, l'emploi, la santé et les démarches.</p>
+          <span class="pillar__go">Consulter les ressources →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="section-head reveal">
         <div>
           <span class="eyebrow">À venir</span>
           <h2>Prochains événements</h2>
         </div>
         <a href="/evenements">Tous les événements →</a>
       </div>
-      {upcoming.length ? (
-        <div class="grid grid--2">{upcoming.map((e) => <EventCard event={e} />)}</div>
+      {shown.length ? (
+        <div class="grid grid--2 reveal">{shown.map((e) => <EventCard event={e} />)}</div>
       ) : (
-        <div class="empty">
+        <div class="empty reveal">
           <p>Aucun événement annoncé pour le moment. Revenez bientôt, ou suivez-nous sur WhatsApp.</p>
-          {recent.map((e) => <EventCard event={e} past />)}
+          {lastPast && <EventCard event={lastPast} past />}
         </div>
       )}
     </div>
   </section>
 
-  <section class="section section--soft">
+  <section class="section">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <div>
           <span class="eyebrow">Actualités</span>
           <h2>Dernières nouvelles</h2>
         </div>
         <a href="/actualites">Toutes les actualités →</a>
       </div>
-      <div class="grid grid--3">{posts.map((p) => <PostCard post={p} />)}</div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="grid grid--2">
-        <div>
-          <span class="eyebrow">Ressources</span>
-          <h2>Des informations utiles, au même endroit</h2>
-          <p class="lead">
-            Immigration, logement, emploi, santé, études : des liens fiables pour vous aider dans vos démarches aux
-            États-Unis.
-          </p>
-          <div class="btn-row"><a class="btn btn--outline" href="/ressources">Consulter les ressources</a></div>
-        </div>
-        <div>
-          <span class="eyebrow">Leadership</span>
-          <h2>Une équipe à votre service</h2>
-          <p class="lead">Faites connaissance avec les personnes qui animent l'association.</p>
-          <div class="btn-row"><a class="btn btn--outline" href="/leadership">Rencontrer l'équipe</a></div>
-        </div>
-      </div>
+      <div class="grid grid--3 reveal">{posts.map((p) => <PostCard post={p} />)}</div>
+      <p class="reveal" style="margin-top:2rem"><a href="/leadership">Rencontrer l'équipe de SEWA USA →</a></p>
     </div>
   </section>
 
   <section class="section" style="padding-top:0">
     <div class="wrap">
-      <div class="cta-band">
+      <div class="cta-band reveal">
         <h2>Restons connectés</h2>
         <p>Rejoignez-nous sur WhatsApp pour suivre les annonces et échanger avec la communauté.</p>
         <div class="btn-row">

@@ -25,6 +25,9 @@ const { event } = Astro.props;
     <div class="wrap prose">
       <p><strong>{event.summary}</strong></p>
       {event.body.map((p) => <p>{p}</p>)}
+      {new Date(event.date) >= new Date() && (
+        <a class="btn btn--outline ics-link" href={`/evenements/${event.slug}.ics`}>Ajouter à mon calendrier</a>
+      )}
     </div>
   </section>
 </Base>

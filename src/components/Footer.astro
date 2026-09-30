@@ -6,12 +6,29 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
+  <div class="flagbar" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="grid grid--3">
+    <div class="footer-top">
       <div>
-        <h3>{site.name}</h3>
-        <p>{site.fullName}</p>
+        <a class="brand" href="/" aria-label={`${site.name}, accueil`}>
+          <img src="/logo.png" alt="" width="44" height="44" loading="lazy" />
+          <span>{site.name}</span>
+        </a>
+        <p class="footer-about">{site.fullName}</p>
+        <a class="btn btn--light" href={site.whatsappHref} rel="noopener">Rejoindre sur WhatsApp</a>
       </div>
+      <img
+        class="footer-map"
+        src="/africa-map.svg"
+        width="620"
+        height="380"
+        loading="lazy"
+        decoding="async"
+        alt="Carte de l'Afrique avec un zoom sur la République centrafricaine et sa capitale, Bangui"
+      />
+    </div>
+
+    <div class="grid grid--2 footer-links">
       <div>
         <h3>Explorer</h3>
         <ul>
@@ -26,7 +43,6 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
           <li><a href={`tel:${site.phoneHref}`}>{site.phone}</a></li>
-          <li><a href={site.whatsappHref} rel="noopener">WhatsApp</a></li>
           {site.facebookHref && <li><a href={site.facebookHref} rel="noopener">Facebook</a></li>}
         </ul>
       </div>
