@@ -11,7 +11,7 @@ const { event } = Astro.props;
 
 <Base title={event.title} description={event.summary}>
   <div class="page-head">
-    <div class="wrap">
+    <div class="wrap enter">
       <a href="/evenements">← Tous les événements</a>
       <p class="meta" style="margin-top:1rem">
         {event.sample && <span class="badge badge--sample">Exemple</span>}
@@ -22,7 +22,7 @@ const { event } = Astro.props;
     </div>
   </div>
   <section class="section">
-    <div class="wrap prose">
+    <div class="wrap prose reveal">
       <p><strong>{event.summary}</strong></p>
       {event.body.map((p) => <p>{p}</p>)}
       {new Date(event.date) >= new Date() && (

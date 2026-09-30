@@ -7,7 +7,7 @@ const site = getSite();
 
 <Base title="Contact" description="Contactez SEWA USA par WhatsApp, e-mail ou téléphone.">
   <div class="page-head">
-    <div class="wrap">
+    <div class="wrap enter">
       <span class="eyebrow">Contact</span>
       <h1>Parlons-nous</h1>
       <p class="lead">Une question, une idée, l'envie de rejoindre l'association ? Écrivez-nous.</p>
@@ -17,15 +17,15 @@ const site = getSite();
     <div class="wrap">
       <div class="grid grid--2">
         <div class="grid">
-          <a class="card" href={site.whatsappHref} rel="noopener">
+          <a class="card reveal" href={site.whatsappHref} rel="noopener">
             <h3>WhatsApp</h3>
             <p>{site.phone}. Le moyen le plus rapide de nous joindre.</p>
           </a>
-          <a class="card" href={`mailto:${site.email}`}>
+          <a class="card reveal" href={`mailto:${site.email}`}>
             <h3>E-mail</h3>
             <p>{site.email}</p>
           </a>
-          <a class="card" href={`tel:${site.phoneHref}`}>
+          <a class="card reveal" href={`tel:${site.phoneHref}`}>
             <h3>Téléphone</h3>
             <p>{site.phone}</p>
           </a>

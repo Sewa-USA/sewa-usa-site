@@ -78,14 +78,15 @@ text{font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif}
 .map-car{fill:#4f8ef7;stroke:#fff;stroke-width:.9;stroke-linejoin:round}
 .map-disc{fill:#0b2a66}
 .map-edge{fill:none;stroke:#fff;stroke-opacity:.3;stroke-width:1.5}
-.map-link{stroke:#fff;stroke-opacity:.45;stroke-width:1.2;stroke-dasharray:4 5}
+.map-link{stroke:#fff;stroke-opacity:.45;stroke-width:1.2;stroke-dasharray:4 5;animation:d 1.4s linear infinite}
+@keyframes d{to{stroke-dashoffset:-9}}
 .map-ring{fill:none;stroke:#9ec0ff;stroke-width:1.6}
 .map-dot{fill:#ffce00;stroke:#fff;stroke-width:2}
 .map-pulse{fill:#ffce00;fill-opacity:.35;transform-box:fill-box;transform-origin:center;animation:p 2.4s ease-out infinite}
 @keyframes p{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.2);opacity:0}}
 .map-label{fill:#fff;font-size:15px;font-weight:700}
 .map-country{fill:#9ec0ff;font-size:12px;font-weight:700;letter-spacing:.22em}
-@media (prefers-reduced-motion:reduce){.map-pulse{animation:none}}
+@media (prefers-reduced-motion:reduce){.map-pulse,.map-link{animation:none}}
 </style>
 <defs><clipPath id="zoom"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath></defs>
 <g class="map-land">${africaPaths}</g>

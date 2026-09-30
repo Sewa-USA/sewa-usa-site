@@ -80,6 +80,13 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
         }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
         els.forEach(function (el) { io.observe(el); });
       })();
+      (function () {
+        var h = document.querySelector('.site-header');
+        if (!h) return;
+        var on = function () { h.classList.toggle('scrolled', window.scrollY > 8); };
+        window.addEventListener('scroll', on, { passive: true });
+        on();
+      })();
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
           navigator.serviceWorker.register('/sw.js').catch(function () {});

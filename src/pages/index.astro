@@ -28,34 +28,34 @@ const highlight = site.tagline.includes('Centrafrique');
         </linearGradient>
       </defs>
       <g fill="none" stroke="url(#arc)" stroke-linecap="round">
-        <circle cx="300" cy="300" r="250" stroke-width="2" stroke-dasharray="520 1100" transform="rotate(-20 300 300)" />
-        <circle cx="300" cy="300" r="205" stroke-width="1.5" stroke-dasharray="380 1000" transform="rotate(95 300 300)" opacity="0.7" />
-        <circle cx="300" cy="300" r="160" stroke-width="1.2" stroke-dasharray="260 900" transform="rotate(200 300 300)" opacity="0.5" />
+        <g class="spin" style="--t:110s"><circle cx="300" cy="300" r="250" stroke-width="2" stroke-dasharray="520 1100" /></g>
+        <g class="spin spin--rev" style="--t:80s" opacity="0.7"><circle cx="300" cy="300" r="205" stroke-width="1.5" stroke-dasharray="380 1000" /></g>
+        <g class="spin" style="--t:60s" opacity="0.5"><circle cx="300" cy="300" r="160" stroke-width="1.2" stroke-dasharray="260 900" /></g>
         <circle cx="300" cy="300" r="115" stroke-width="1" opacity="0.25" />
       </g>
     </svg>
 
     <div class="wrap hero__grid">
       <div>
-        <span class="eyebrow">Association des Centrafricains et Amis de la Centrafrique aux États-Unis</span>
-        <h1>
+        <span class="eyebrow enter" style="--d:0.05s">Association des Centrafricains et Amis de la Centrafrique aux États-Unis</span>
+        <h1 class="enter" style="--d:0.15s">
           {highlight ? (
             <>{before}<span class="grad">Centrafrique</span>{after}</>
           ) : (
             site.tagline
           )}
         </h1>
-        <p class="lead">
+        <p class="lead enter" style="--d:0.3s">
           SEWA USA réunit la communauté centrafricaine et ses amis : des rencontres, des nouvelles du pays et des
           ressources utiles pour avancer ensemble.
         </p>
-        <div class="btn-row">
+        <div class="btn-row enter" style="--d:0.45s">
           <a class="btn btn--light" href={site.whatsappHref} rel="noopener">Rejoindre la communauté</a>
           <a class="btn btn--ghost" href="/evenements">Voir les événements</a>
         </div>
       </div>
 
-      <aside class="glass" aria-label={next ? 'Prochain événement' : 'Rejoindre la communauté'}>
+      <aside class="glass enter" style="--d:0.55s" aria-label={next ? 'Prochain événement' : 'Rejoindre la communauté'}>
         {next && nextParts ? (
           <>
             <p class="label">Prochain rendez-vous</p>

@@ -12,7 +12,7 @@ const official = post.category === 'Communiqué officiel';
 
 <Base title={post.title} description={post.summary}>
   <div class="page-head">
-    <div class="wrap">
+    <div class="wrap enter">
       <a href="/actualites">← Toutes les actualités</a>
       <p class="meta" style="margin-top:1rem">
         {post.sample && <span class="badge badge--sample">Exemple</span>}
@@ -23,7 +23,7 @@ const official = post.category === 'Communiqué officiel';
     </div>
   </div>
   <section class="section">
-    <div class="wrap prose">
+    <div class="wrap prose reveal">
       {post.body.map((p) => <p>{p}</p>)}
     </div>
   </section>

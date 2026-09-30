@@ -14,7 +14,7 @@ const initials = (name: string) =>
 
 <Base title="Leadership" description="L'équipe qui anime SEWA USA.">
   <div class="page-head">
-    <div class="wrap">
+    <div class="wrap enter">
       <span class="eyebrow">Leadership</span>
       <h1>L'équipe de SEWA USA</h1>
       <p class="lead">Des bénévoles engagés au service de la communauté centrafricaine aux États-Unis.</p>
@@ -24,7 +24,7 @@ const initials = (name: string) =>
     <div class="wrap">
       <div class="grid grid--4">
         {team.map((m) => (
-          <div class="card">
+          <div class="card reveal">
             <div class="avatar" aria-hidden="true">{initials(m.name)}</div>
             {m.sample && <span class="badge badge--sample">Exemple</span>}
             <h3>{m.name}</h3>

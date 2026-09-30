@@ -313,9 +313,6 @@ p {
   color: rgb(255 255 255 / 80%);
 }
 .grad {
-  background: var(--grad-light);
-  -webkit-background-clip: text;
-  background-clip: text;
   color: transparent;
 }
 .glass {
@@ -819,26 +816,104 @@ a.card:hover::before {
   margin-top: 1.25rem;
 }
 
-/* Scroll reveal: only when JS is on, never hides content otherwise */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.js .reveal.in {
-  opacity: 1;
-  transform: none;
-}
-.js .reveal[data-delay='1'] {
-  transition-delay: 0.08s;
-}
-.js .reveal[data-delay='2'] {
-  transition-delay: 0.16s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal {
+/* Scroll reveal: only when JS is on, never hides content otherwise.
+   Uses an animation with `backwards` fill so hover transforms keep working afterwards. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
     opacity: 1;
     transform: none;
+  }
+}
+.js .reveal:not(.in) {
+  opacity: 0;
+}
+.js .reveal.in {
+  animation: rise 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+.js .reveal[data-delay='1'],
+.js .grid > .reveal:nth-child(3n + 2) {
+  animation-delay: 0.09s;
+}
+.js .reveal[data-delay='2'],
+.js .grid > .reveal:nth-child(3n + 3) {
+  animation-delay: 0.18s;
+}
+
+/* Hero entrance, plays once on load (works without JS) */
+.enter {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: var(--d, 0s);
+}
+
+/* "Centrafrique" gradient slowly flows */
+@keyframes flow {
+  to {
+    background-position: 200% 0;
+  }
+}
+.grad {
+  background: linear-gradient(100deg, #8ff0b2, #9cc2ff, #cdb0ff, #9cc2ff, #8ff0b2);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: flow 7s linear infinite;
+}
+
+/* Hero arcs drift */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin {
+  transform-origin: 300px 300px;
+  animation: spin var(--t, 90s) linear infinite;
+}
+.spin--rev {
+  animation-direction: reverse;
+}
+
+/* Header gets a soft shadow once the page scrolls */
+.site-header {
+  transition: box-shadow 0.25s ease;
+}
+.site-header.scrolled {
+  box-shadow: 0 8px 28px rgb(10 36 87 / 10%);
+}
+
+/* Smooth cross-fade between pages where the browser supports it */
+@view-transition {
+  navigation: auto;
+}
+.site-header {
+  view-transition-name: site-header;
+}
+.tabbar {
+  view-transition-name: tabbar;
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal:not(.in) {
+    opacity: 1;
+  }
+  .js .reveal.in,
+  .enter,
+  .spin,
+  .grad {
+    animation: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }
 

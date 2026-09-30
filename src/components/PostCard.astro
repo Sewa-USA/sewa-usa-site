@@ -9,7 +9,7 @@ const { post } = Astro.props;
 const official = post.category === 'Communiqué officiel';
 ---
 
-<a class="card" href={`/actualites/${post.slug}`}>
+<a class="card reveal" href={`/actualites/${post.slug}`}>
   <p class="meta">
     {post.sample && <span class="badge badge--sample">Exemple</span>}
     <span class={`badge${official ? ' badge--official' : ''}`}>{post.category}</span>

@@ -7,7 +7,7 @@ const groups = Object.entries(getResourcesByCategory());
 
 <Base title="Ressources" description="Liens et guides utiles pour la communauté : immigration, logement, emploi, santé, études.">
   <div class="page-head">
-    <div class="wrap">
+    <div class="wrap enter">
       <span class="eyebrow">Ressources</span>
       <h1>Des informations utiles</h1>
       <p class="lead">
@@ -19,11 +19,11 @@ const groups = Object.entries(getResourcesByCategory());
   <section class="section">
     <div class="wrap">
       {groups.map(([category, items]) => (
-        <div class="res-group">
+        <div class="res-group reveal">
           <h2>{category}</h2>
           <div class="grid grid--2">
             {items.map((r) => (
-              <a class="card res-link" href={r.url} target="_blank" rel="noopener noreferrer">
+              <a class="card reveal res-link" href={r.url} target="_blank" rel="noopener noreferrer">
                 <div>
                   <h3>{r.title}</h3>
                   <p>{r.description}</p>

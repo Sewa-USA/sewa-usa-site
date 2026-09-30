@@ -10,7 +10,7 @@ const { event, past = false } = Astro.props;
 const d = dateParts(event.date);
 ---
 
-<a class={`card event${past ? ' event--past' : ''}`} href={`/evenements/${event.slug}`} data-date={event.date}>
+<a class={`card reveal event${past ? ' event--past' : ''}`} href={`/evenements/${event.slug}`} data-date={event.date}>
   <div class="date-chip" aria-hidden="true">
     <strong>{d.day}</strong>
     <span>{d.month}</span>
